@@ -7,41 +7,25 @@
     
     <title>@yield('title', config('app.name'))</title>
     
-    <!-- Favicon -->
-    <link rel="icon" href="{{ asset('favicon.ico') }}">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @stack('styles')
-    
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
-<body class="antialiased">
+<body>
     <div id="app">
-        <!-- Шапка -->
         @include('layouts.header')
         
-        <!-- Навигация -->
-        @include('layouts.nav')
-        
-        <!-- Основное содержимое -->
         <main class="container py-4">
-            <!-- Уведомления -->
             @include('partials.alerts')
-            
-            <!-- Контент страницы -->
             @yield('content')
         </main>
         
-        <!-- Подвал -->
         @include('layouts.footer')
     </div>
-    
-    <!-- Дополнительные скрипты -->
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     @stack('scripts')
 </body>
 </html>
