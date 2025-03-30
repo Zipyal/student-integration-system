@@ -6,17 +6,19 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
         'name',
         'email',
         'password',
         'role',
-        'curator_id'
+        'curator_id',
+        'email_verified_at'
     ];
 
     protected $hidden = [
@@ -39,10 +41,19 @@ class User extends Authenticatable
         return $this->hasMany(User::class, 'curator_id');
     }
 
-    public function registeredEvents()
+    // Проверка ролей
+    public function isAdmin()
     {
-        return $this->belongsToMany(Event::class, 'registrations')
-                   ->withPivot('confirmed')
-                   ->withTimestamps();
+        return $this->role === 'admin';
+    }
+
+    public function isCurator()
+    {
+        return $this->role === 'curator';
+    }
+
+    public function isStudent()
+    {
+        return $this->role === 'student';
     }
 }
